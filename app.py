@@ -25,7 +25,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 migrate =Migrate(app, db)
 
-# TODO: connect to a local postgresql database
+
 
 #----------------------------------------------------------------------------#
 # Models.
@@ -48,7 +48,7 @@ class Venue(db.Model):
     shows = db.relationship('Show', backref='venue', lazy=True)
     genres = db.Column(db.String(500))
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
+    
 
 class Artist(db.Model):
     __tablename__ = 'Artist'
@@ -73,9 +73,7 @@ class Artist(db.Model):
       venue_id = db.Column(db.Integer, db.ForeignKey('venues.id'), nullable=False)
       start_time = db.Column(db.DateTime, nullable=False)
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
-
-# TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
+    
 
 #----------------------------------------------------------------------------#
 # Filters.
@@ -105,9 +103,7 @@ def index():
 
 @app.route('/venues')
 def venues():
-  # TODO: replace with real venues data.
-  #       num_upcoming_shows should be aggregated based on number of upcoming shows per venue.
-
+  
   data =[]
   venues = Venue.query.with_entities(Venue.city, Venue.state).distinct(Venue.city, Venue.state)
   current_time = datetime.now()
@@ -127,9 +123,7 @@ def venues():
 
 @app.route('/venues/search', methods=['POST'])
 def search_venues():
-  # TODO: implement search on artists with partial string search. Ensure it is case-insensitive.
-  # seach for Hop should return "The Musical Hop".
-  # search for "Music" should return "The Musical Hop" and "Park Square Live Music & Coffee"
+  
   key = request.form.get('search_term', '')
 
   query = Venue.query.filter(Venue.name.ilike("%" + key + "%")).all()
@@ -151,8 +145,7 @@ def search_venues():
 
 @app.route('/venues/<int:venue_id>')
 def show_venue(venue_id):
-  # shows the venue page with the given venue_id
-  # TODO: replace with real venue data from the venues table, using venue_id
+ 
   venue = Venue.query.filter_by(id=venue_id).one()
   all_shows = venue.shows
   current_time = datetime.now()
